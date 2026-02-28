@@ -1,4 +1,9 @@
 # CreatorFuel Documentation
+![Next.js](https://img.shields.io/badge/Next.js-FullStack-black)
+![MongoDB](https://img.shields.io/badge/Database-MongoDB-green)
+![Razorpay](https://img.shields.io/badge/Payments-Razorpay-blue)
+![NextAuth](https://img.shields.io/badge/Auth-NextAuth-purple)
+![SaaS](https://img.shields.io/badge/App-SaaS-orange)
 
 Full Stack SaaS Tipping Platform built with Next.js, MongoDB, Razorpay and NextAuth.
 
