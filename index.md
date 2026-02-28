@@ -1,5 +1,17 @@
 # CreatorFuel Documentation
 
+Full Stack SaaS Tipping Platform built with Next.js, MongoDB, Razorpay and NextAuth.
+
+---
+
+## Project Links
+
+Live App: https://creator-fuel-six.vercel.app/  
+Source Code: https://github.com/imjoe77/creatorfuel  
+Docs Repo: https://github.com/imjoe77/creatorfuel-docs  
+
+---
+
 ## Introduction
 CreatorFuel is a full-stack SaaS (Software as a Service) web application that allows creators to receive tips and payments directly from their supporters.
 
