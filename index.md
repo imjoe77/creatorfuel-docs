@@ -13,7 +13,7 @@ Full Stack SaaS Tipping Platform built with Next.js, MongoDB, Razorpay and NextA
 
 - 🌐 Live App → [Open CreatorFuel](https://creator-fuel-six.vercel.app/)  
 - 💻 Source Code → [GitHub Repository](https://github.com/imjoe77/Creator-Fuel)  
-- 📄 Documentation → [Docs Repository](https://github.com/imjoe77/creatorfuel-docs)  
+  
 ---
 
 ## Introduction
