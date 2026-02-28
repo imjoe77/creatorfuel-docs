@@ -1,4 +1,4 @@
-# CreatorFuel – Full Documentation
+# CreatorFuel Documentation
 
 ## Introduction
 CreatorFuel is a full-stack SaaS (Software as a Service) web application that allows creators to receive tips and payments directly from their supporters.
