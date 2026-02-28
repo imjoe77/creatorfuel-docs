@@ -1,16 +1,33 @@
 # CreatorFuel – Full Documentation
 
 ## Introduction
-CreatorFuel is a full stack web application built to allow creators to receive payments and manage their content.
-It acts as a fund raiser website for the creators where their fans can directly tip to their favourite creators.
+CreatorFuel is a full-stack SaaS (Software as a Service) web application that allows creators to receive tips and payments directly from their supporters.
 
-This project was built using Next.js,MongoDb, Razorpay API, HTML, CSS, Tailwind-css.
+The platform works as a fundraiser / tipping service where creators can create their profile, configure payment settings, and receive payments from fans without any platform charges.
+
+CreatorFuel follows a multi-user SaaS model where each creator can sign up, manage their dashboard, configure Razorpay keys, and use the platform to receive payments securely.
+
+This project was built using Next.js, MongoDB, Razorpay API, Tailwind CSS, and NextAuth.
 
 ---
 
 ## Problem Statement
-Many small creators do not have an easy way to accept payments.
-CreatorFuel solves this by providing a simple platform where users receive tips from fans without any hidden charges from the platform.
+Many small creators do not have an easy way to accept payments without building their own payment system.
+
+Existing platforms often charge fees or require complex setup.
+
+CreatorFuel solves this by providing a simple SaaS platform where creators can sign up, configure their payment details, and receive tips directly from fans without hidden charges from the platform.
+
+---
+
+## Application Type
+
+• SaaS (Software as a Service) platform  
+• Multi-user system where each creator has their own profile  
+• Each creator can configure their own Razorpay payment keys  
+• Payments are verified securely per creator  
+• Dashboard allows creators to manage profile and stats  
+• Public pages allow fans to send tips  
 
 ---
 
@@ -19,11 +36,11 @@ CreatorFuel solves this by providing a simple platform where users receive tips 
 Framework:
 - Next.js (Frontend + Backend API Routes)
 
-- Frontend framework (styling):
-  Tailwind-css
+Frontend styling:
+- Tailwind CSS
 
 Language:
-- JavaScript 
+- JavaScript
 
 Database:
 - MongoDB
@@ -37,121 +54,241 @@ Payments:
 Deployment:
 - Vercel
 
+---
+
+## Components
+
+### Navbar component
+Three separate navbar components are used across the project to show versatile functionality.
+One navbar shows default navigation,
+one is dedicated for creator pages with search bar,
+and another is reused across dashboard and other pages.
+
+### Footer component
+Same footer component used across the entire website.
+GitHub button redirects to source code repository.
+
+### PaymentPage component
+
+Accepts parameters:
+username, payments, profilePic, bannerPic, stats
+
+Functions:
+
+• useEffect  
+Shows toast after successful payment and redirects back to creator page
+
+• handleChange  
+Handles form input values
+
+• isDisabled  
+Checks if form inputs are valid
+
+• pay function  
+Main payment logic
+
+- Checks session login
+- Validates inputs
+- Shows loading toast
+- Calls backend initiate()
+- Receives Razorpay order
+- Opens Razorpay popup
+- Prefills user data
+- Uses callback URL for verification
+- Handles errors
+
+• Top payments logic  
+Shows latest 5 payments from database
 
 ---
 
-#Components
-1. Navbar components:
-Three separate navbar components are used accross the project to show versatile functionality where one shows the default features like navigations,one is dedicated for the creators page where it has a search bar using which the users can search for their favourite creators and the other navbar is reused across other components which is also for navigations and other functionality like login,signout,etc
+### SearchBar component
 
-2. Footer component:
-Usual footer component, same fotter component used accross the website wherein the github option takes the users to the repository of the source code of the website.
+• Client-side search using Next.js  
+• useState for query and results  
+• Calls searchUsers() action  
+• Uses map() to display results  
+• Link used for navigation  
+• useRef used for blur handling  
+• Dropdown closes safely  
+• Shows fallback message  
 
-3. PaymentPage component -
-The function accepts parameters username, payments, profilePic, bannerPic, stats. The functions starts with -
-* useeffect- Which runs a toast on successful payment and psuhes back to username page which avoids re-running of the toast while on payment success page.
+---
 
-* handleChange function - Is used to handle form inputs to correctly capture and display
+### SessionWrapper component
 
-* isDisabled - Check form inputs and allows button functionality
+Wrapper component used to provide authentication session across the entire application using NextAuth.
 
-* pay - This is the main function which handles the payment,
- • It first check for session which verifies whether the user is logged in or not,throws a toast if not ad pushes to login page.
- • Inputs validations check for length,amount and specifies using toasts.Another toast
-• Display loading notification while initiating payment
-• Call backend function to create Razorpay order
-• Receive keyId and orderId from server
-• Configure Razorpay checkout options
-• Open Razorpay payment popup
-• Prefill user details in payment form
-• Use callback URL for payment verification
-• Handle errors if payment configuration fails
+---
 
-* Top Payments logic - in the payments collection we slice from index 0-5
-
-  4. SearchBar component:
- • Implemented a client-side search bar using Next.js
-• useState used for query, results, and dropdown state
-• Calls backend action searchUsers() for filtering users
-• Results displayed dynamically using map()
-• Link component used for navigation to profile page
-• Each search result is wrapped inside Next.js Link component
-• Link automatically navigates to the given URL
-• useRef used to handle blur and close dropdown safely
-• Conditional rendering used for dropdown visibility
-• Shows fallback message when no users found
-
-5. SessionWrapper component -
-Inbuilt library which provides session check to the whole website
-   
-## Features
+## Core Features
 
 ### Useractions
 
-1.updateProfile function -
-* This function is used to handle changes and updates made by the user to his proifle in the dashboard page of the website.
-* Uses a try-catch block where the try block starts with session check for login then we use the user's email as a unique constraint to fetch the user's information from the database and store inside currentUser variable.
-* This compares current values with the one in the database before updating to maintain integrity and dupliacte values in crucial fields.Also checks if current name saved in database and updating name is unique this prevents from unneccessary database communication.
+1. updateProfile  
+Updates profile using session email  
+Prevents duplicate values  
+Maintains data integrity  
 
-  2.initiate function -
-  * This function handles the payment logic as to how the payment reaches the user,who sends it,etc.
-  * Firsts connects to the database,then stores current creator's information in a variable creator so we can track who gets the money,if creators has not set up payment details error toast pops up.
-  * Then we set up the razorpay api wherein we provide keyId and secret of the creator,parse amount from paise to ruppee and currency to INR
-  * Create a variable x which holds the orders then create and save payment collection with details
+2. initiate  
+Creates Razorpay order  
+Stores payment in DB  
+Uses creator key  
 
+3. fetchPayments  
+Fetches successful payments  
+Sorts latest first  
+Limits results  
 
-### Authentication
-- Login
-- Register
-- Session handling
+4. fetchUserStats  
+Counts total payments  
+Counts total amount  
 
-### Creator Dashboard
-- Profile
-- Payment link
-- Stats
+5. searchUsers  
+Regex search  
+Case insensitive  
+Limit results  
+Return plain objects  
 
-### Payment Integration
-- Razorpay keys
-- Order creation
-- Webhook handling
-
----
-
-## How it works (Flow)
-
-User → Creator page → Payment → Razorpay → Backend → Database
+6. fetchUser  
+Gets logged in user  
+Removes secret key  
+Sanitizes object  
 
 ---
 
-## Challenges I faced
+## API Endpoints
 
-- Razorpay live key issue
-- Session handling
-- Database connection errors
-- Deployment problems
+### auth
+NextAuth login  
+Google & GitHub  
+Creates user  
+Adds username to session  
+
+### razorpay
+Called after payment  
+Gets FormData  
+Finds order  
+Gets creator key  
+Verifies signature  
+Updates DB  
+Redirects user  
+
+### user/me
+Protected API  
+Gets session  
+Finds user  
+Hides secret  
+Returns safe data  
+
+---
+
+## Routes
+
+/[username] → Creator page  
+/dashboard → Dashboard  
+/about → About  
+/creators → Creators list  
+/api → API routes  
+/models → DB models  
+/default → Layout route  
+
+Each route has page.js and layout.js  
+Some routes added for structure completeness
+
+---
+
+## Database Connection
+
+Uses Mongoose  
+Reads env URI  
+Uses global cache  
+Prevents multiple connections  
+Used in API and actions
+
+---
+
+## Authentication
+
+Login  
+Register  
+Session handling  
+
+---
+
+## Creator Dashboard
+
+Profile edit  
+Payment keys  
+Stats  
+Supporters list  
+
+---
+
+## Payment Integration
+
+Creator sets keys  
+Order created  
+Payment verified  
+DB updated  
+Redirect success  
+
+---
+
+## Flow
+
+Creator signs up  
+Sets payment keys  
+Gets public page  
+
+User visits page  
+Sends tip  
+Razorpay popup  
+Callback API  
+Verify signature  
+Update DB  
+Redirect success
+
+Platform works as SaaS  
+Multiple creators  
+Separate keys  
+Secure verification
+
+---
+
+## Challenges
+
+Razorpay live keys  
+Session issues  
+Mongo connection  
+Deployment bugs  
 
 ---
 
 ## What I learned
 
-- Full stack workflow
-- API integration
-- Debugging backend
-- Real world project structure
+Full stack flow  
+NextAuth  
+MongoDB  
+Razorpay  
+Next.js API  
+Production debugging  
 
 ---
 
 ## Future Improvements
 
-- Better UI
-- More payment options
-- Admin panel
-- Analytics
+Better UI  
+More payment gateways  
+Admin panel  
+Analytics  
+Notifications  
 
 ---
 
 ## Author
 
-Joel Bandi  
+Nathaniel Bandi  
 BCA Student  
-Aspiring Backend / DevOps Engineer
+Aspiring Backend / Cloud Engineer  
+Interested in Full Stack, Backend Systems, Cloud
